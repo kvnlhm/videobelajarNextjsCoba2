@@ -96,13 +96,11 @@ const HomePage = () => {
       <section className="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         <div className="relative h-[400px] flex items-center justify-center rounded-[20px] overflow-hidden shadow-2xl">
           <div
-            className="absolute inset-0 bg-cover bg-center"
+            className="absolute inset-0 bg-cover bg-center brightness-50"
             style={{
-              backgroundImage: 'url(https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80)'
+              backgroundImage: `url(https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80)`
             }}
           />
-          {/* Dark Overlay matching reference image */}
-          <div className="absolute inset-0 bg-black/90"></div>
           <div className="relative z-10 text-center text-white px-6 max-w-4xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
               Revolusi Pembelajaran: Temukan Ilmu Baru melalui Platform Video Interaktif!
