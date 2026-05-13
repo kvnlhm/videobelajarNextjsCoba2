@@ -7,9 +7,9 @@ const CourseCard = ({ course }) => {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
       <div className="h-48 bg-gray-200 flex items-center justify-center">
-        {course.image && course.image.trim() !== '' ? (
+        {(course.thumbnail_url || course.image) && (course.thumbnail_url || course.image).trim() !== '' ? (
           <img 
-            src={course.image} 
+            src={course.thumbnail_url || course.image} 
             alt={course.title}
             className="w-full h-full object-cover"
             onError={(e) => {
