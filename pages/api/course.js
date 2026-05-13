@@ -1,7 +1,5 @@
 const mysql = require('mysql2/promise');
-const fs = require('fs');
-const path = require('path');
-
+const { uploadImage } = require('../../src/utils/cloudinary');
 const pool = mysql.createPool({
   host: process.env.MYSQL_HOST,
   user: process.env.MYSQL_USER,
@@ -117,49 +115,20 @@ async function handlePost(req, res) {
     const priceNumber = typeof price === 'string' ? 
       parseInt(price.replace(/[^\d]/g, '')) : price;
     
-    // Handle file upload - save file to filesystem
+    // Handle file upload to Cloudinary
     let finalThumbnailUrl = thumbnail_url || '/img1.jpg';
     
-    // Check if thumbnail_file exists and has name property
-    if (thumbnail_file && typeof thumbnail_file === 'object' && thumbnail_file.name && thumbnail_file.name.trim().length > 0) {
+    // Check if thumbnail_file exists and has data property (base64 string)
+    if (thumbnail_file && typeof thumbnail_file === 'object' && thumbnail_file.data) {
       try {
-        // Create uploads directory if it doesn't exist
-        const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
-        if (!fs.existsSync(uploadsDir)) {
-          fs.mkdirSync(uploadsDir, { recursive: true });
-        }
-        
-        // Generate unique filename
-        const timestamp = Date.now();
-        const fileExtension = path.extname(thumbnail_file.name);
-        const uniqueFilename = `${timestamp}${fileExtension}`;
-        
-        // Save the actual file to filesystem
-        const filePath = path.join(uploadsDir, uniqueFilename);
-        
-        // Handle different base64 formats
-        let base64Data = thumbnail_file.data;
-        if (base64Data.includes(',')) {
-          base64Data = base64Data.split(',')[1]; // Remove data:image/type;base64, prefix
-        }
-        
-        const fileBuffer = Buffer.from(base64Data, 'base64');
-        fs.writeFileSync(filePath, fileBuffer);
-        
-        // Save the filename to database
-        finalThumbnailUrl = `/uploads/${uniqueFilename}`;
-        
-        // Log file upload success
-        console.log('File uploaded successfully:', uniqueFilename);
-        console.log('File path:', filePath);
-        console.log('File size:', fileBuffer.length, 'bytes');
-        
-        // Verify file was written correctly
-        const stats = fs.statSync(filePath);
-        console.log('Actual file size on disk:', stats.size, 'bytes');
-      } catch (fileError) {
-        console.error('Error handling file upload:', fileError);
-        finalThumbnailUrl = thumbnail_file.name; // Fallback to original name
+        console.log('Uploading image to Cloudinary...');
+        // thumbnail_file.data contains the base64 string
+        finalThumbnailUrl = await uploadImage(thumbnail_file.data, 'videobelajar_courses');
+        console.log('Upload successful, URL:', finalThumbnailUrl);
+      } catch (uploadError) {
+        console.error('Cloudinary upload failed:', uploadError);
+        // Fallback to original name or default if upload fails
+        finalThumbnailUrl = thumbnail_url || '/img1.jpg';
       }
     }
     

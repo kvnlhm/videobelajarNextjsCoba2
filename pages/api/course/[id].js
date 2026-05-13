@@ -1,7 +1,7 @@
 const mysql = require('mysql2/promise');
+const { uploadImage } = require('../../src/utils/cloudinary');
 const fs = require('fs');
 const path = require('path');
-
 // Check if required environment variables are set
 if (!process.env.MYSQL_HOST || !process.env.MYSQL_USER || !process.env.MYSQL_DATABASE) {
   console.error('Missing required database environment variables:');
@@ -205,39 +205,14 @@ async function handlePatch(req, res, id) {
     console.log('Final course data:', courseData);
     
     // Handle file upload if present
-    if (req.body.thumbnail_file && typeof req.body.thumbnail_file === 'object' && req.body.thumbnail_file.name) {
+    // Handle file upload if present via Cloudinary
+    if (req.body.thumbnail_file && typeof req.body.thumbnail_file === 'object' && req.body.thumbnail_file.data) {
       try {
-        const thumbnail_file = req.body.thumbnail_file;
-        
-        // Create uploads directory if it doesn't exist
-        const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
-        if (!fs.existsSync(uploadsDir)) {
-          fs.mkdirSync(uploadsDir, { recursive: true });
-        }
-        
-        // Generate unique filename
-        const timestamp = Date.now();
-        const fileExtension = path.extname(thumbnail_file.name);
-        const uniqueFilename = `${timestamp}${fileExtension}`;
-        
-        // Save the actual file to filesystem
-        const filePath = path.join(uploadsDir, uniqueFilename);
-        
-        // Handle different base64 formats
-        let base64Data = thumbnail_file.data;
-        if (base64Data.includes(',')) {
-          base64Data = base64Data.split(',')[1]; // Remove data:image/type;base64, prefix
-        }
-        
-        const fileBuffer = Buffer.from(base64Data, 'base64');
-        fs.writeFileSync(filePath, fileBuffer);
-        
-        // Update thumbnail_url
-        courseData.thumbnail_url = `/uploads/${uniqueFilename}`;
-        
-        console.log('File updated successfully:', uniqueFilename);
-      } catch (fileError) {
-        console.error('Error handling file upload:', fileError);
+        console.log('Uploading image to Cloudinary...');
+        courseData.thumbnail_url = await uploadImage(req.body.thumbnail_file.data, 'videobelajar_courses');
+        console.log('Upload successful, URL:', courseData.thumbnail_url);
+      } catch (uploadError) {
+        console.error('Cloudinary upload failed:', uploadError);
       }
     }
     
