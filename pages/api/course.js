@@ -166,7 +166,11 @@ async function handlePost(req, res) {
       rating: 4.5,
       price: `Rp ${newCourse[0].price.toLocaleString('id-ID')}`,
       thumbnail_url: newCourse[0].thumbnail_url || '/img1.jpg',
-      instructorImage: '/img2.png'
+      instructorImage: '/img2.png',
+      category: newCourse[0].category_id,
+      level: newCourse[0].difficulty_level,
+      duration: newCourse[0].duration_hours,
+      isActive: newCourse[0].is_active
     };
     
     res.status(201).json(transformedCourse);

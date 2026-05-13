@@ -256,7 +256,11 @@ async function handlePatch(req, res, id) {
       rating: 4.5,
       price: `Rp ${updatedCourse[0].price.toLocaleString('id-ID')}`,
       thumbnail_url: updatedCourse[0].thumbnail_url || '/img1.jpg',
-      instructorImage: '/img2.png'
+      instructorImage: '/img2.png',
+      category: updatedCourse[0].category_id,
+      level: updatedCourse[0].difficulty_level,
+      duration: updatedCourse[0].duration_hours,
+      isActive: updatedCourse[0].is_active
     };
     
     res.status(200).json(transformedCourse);
