@@ -8,8 +8,8 @@ const CourseCard = ({ course }) => {
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
       <div className="h-48 bg-gray-200 flex items-center justify-center">
         {(course.thumbnail_url || course.image) && (course.thumbnail_url || course.image).trim() !== '' ? (
-          <img 
-            src={course.thumbnail_url || course.image} 
+          <img
+            src={course.thumbnail_url || course.image}
             alt={course.title}
             className="w-full h-full object-cover"
             onError={(e) => {
@@ -18,8 +18,8 @@ const CourseCard = ({ course }) => {
             }}
           />
         ) : (
-          <img 
-            src="/img1.jpg" 
+          <img
+            src="/img1.jpg"
             alt="Default Kelas"
             className="w-full h-full object-cover"
           />
@@ -28,12 +28,12 @@ const CourseCard = ({ course }) => {
       <div className="p-4">
         <h3 className="font-semibold text-gray-800 mb-2">{course.title}</h3>
         <p className="text-sm text-gray-600 mb-3 line-clamp-2">{course.description}</p>
-        
+
         {/* Instructor Info */}
         <div className="flex items-center mb-3">
           {course.instructorImage && course.instructorImage.trim() !== '' ? (
-            <img 
-              src={course.instructorImage} 
+            <img
+              src={course.instructorImage}
               alt={course.instructor}
               className="w-8 h-8 rounded-full mr-2"
               onError={(e) => {
@@ -42,8 +42,8 @@ const CourseCard = ({ course }) => {
               }}
             />
           ) : (
-            <img 
-              src="/img2.png" 
+            <img
+              src="/img2.png"
               alt="Default Instructor"
               className="w-8 h-8 rounded-full mr-2"
             />
@@ -53,13 +53,13 @@ const CourseCard = ({ course }) => {
             <p className="text-xs text-gray-500">{course.instructorTitle}</p>
           </div>
         </div>
-        
+
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <div className="flex text-yellow-400">
               {[...Array(5)].map((_, i) => (
                 <svg key={i} className={`w-4 h-4 ${i < 4 ? 'fill-current' : 'fill-gray-300'}`} viewBox="0 0 20 20">
-                  <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z"/>
+                  <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
                 </svg>
               ))}
             </div>
@@ -76,12 +76,12 @@ const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState('Semua Kelas');
   const [email, setEmail] = useState('');
   const { courses, loading, error } = useCourses();
-  
+
   console.log('HomePage courses:', courses);
-  
+
   const categories = ['Semua Kelas', 'Pemasaran', 'Desain', 'Pengembangan Diri', 'Bisnis'];
-  
-  
+
+
   const handleSubscribe = (e) => {
     e.preventDefault();
     if (email) {
@@ -89,33 +89,34 @@ const HomePage = () => {
       setEmail('');
     }
   };
-  
+
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative h-96 flex items-center justify-center">
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80)'
-          }}
-        />
-        {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black/80"></div>
-        <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Revolusi Pembelajaran: Temukan Ilmu Baru melalui Platform Video Interaktif!
-          </h1>
-          <p className="text-lg mb-8 max-w-2xl mx-auto">
-            Jelajahi dunia pengetahuan yang luas melalui koleksi video pembelajaran interaktif kami. 
-            Ikuti latihan mendalam, dapatkan sertifikat, dan tingkatkan keterampilan Anda.
-          </p>
-          <Button className="px-8 py-3 text-lg">
-            Temukan Video Course untuk Dipelajari!
-          </Button>
+      <section className="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="relative h-[400px] flex items-center justify-center rounded-[20px] overflow-hidden shadow-2xl">
+          <div 
+            className="absolute inset-0 bg-cover bg-center"
+            style={{
+              backgroundImage: 'url(https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80)'
+            }}
+          />
+          {/* Dark Overlay matching reference image */}
+          <div className="absolute inset-0 bg-black/70"></div>
+          <div className="relative z-10 text-center text-white px-6 max-w-4xl mx-auto">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
+              Revolusi Pembelajaran: Temukan Ilmu Baru melalui Platform Video Interaktif!
+            </h1>
+            <p className="text-base md:text-lg mb-8 max-w-3xl mx-auto text-gray-200">
+              Temukan ilmu baru yang menarik dan mendalam melalui koleksi video pembelajaran berkualitas tinggi. Tidak hanya itu, Anda juga dapat berpartisipasi dalam latihan interaktif yang akan meningkatkan pemahaman Anda.
+            </p>
+            <Button className="px-8 py-3 text-lg bg-videobelajar-green hover:bg-green-600 border-none text-white rounded-md font-medium shadow-lg transition-transform transform hover:scale-105">
+              Temukan Video Course untuk Dipelajari!
+            </Button>
+          </div>
         </div>
       </section>
-      
+
       {/* Course Collection Section */}
       <section className="py-16 px-4">
         <div className="container mx-auto">
@@ -138,24 +139,23 @@ const HomePage = () => {
               </Link>
             </div>
           </div>
-          
+
           {/* Category Tabs */}
           <div className="flex flex-wrap justify-center mb-8 gap-2">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-6 py-2 rounded-full font-medium transition-colors ${
-                  selectedCategory === category
+                className={`px-6 py-2 rounded-full font-medium transition-colors ${selectedCategory === category
                     ? 'bg-videobelajar-green text-white'
                     : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-300'
-                }`}
+                  }`}
               >
                 {category}
               </button>
             ))}
           </div>
-          
+
           {/* Course Grid */}
           {loading ? (
             <div className="flex justify-center items-center py-12">
@@ -181,10 +181,10 @@ const HomePage = () => {
           )}
         </div>
       </section>
-      
+
       {/* Newsletter Section */}
       <section className="relative py-16 bg-gradient-to-r from-videobelajar-dark/80 to-videobelajar-dark/60">
-        <div 
+        <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
             backgroundImage: 'url(https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80)'
