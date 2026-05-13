@@ -8,11 +8,23 @@ const CourseCard = ({ course }) => {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
       <div className="h-48 bg-gray-200 flex items-center justify-center">
-        <img 
-          src={course.thumbnail_url} 
-          alt={course.title}
-          className="w-full h-full object-cover"
-        />
+        {(course.thumbnail_url || course.image) && (course.thumbnail_url || course.image).trim() !== '' ? (
+          <img 
+            src={course.thumbnail_url || course.image} 
+            alt={course.title}
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              e.target.src = '/img1.jpg';
+              e.target.className = 'w-full h-full object-cover';
+            }}
+          />
+        ) : (
+          <img 
+            src="/img1.jpg" 
+            alt="Default Kelas"
+            className="w-full h-full object-cover"
+          />
+        )}
       </div>
       <div className="p-4">
         <h3 className="font-semibold text-gray-800 mb-2">{course.title}</h3>
