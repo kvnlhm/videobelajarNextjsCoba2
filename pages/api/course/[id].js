@@ -1,5 +1,5 @@
 const mysql = require('mysql2/promise');
-const { uploadImage } = require('../../src/utils/cloudinary');
+const { uploadImage } = require('../../../src/utils/cloudinary');
 const fs = require('fs');
 const path = require('path');
 // Check if required environment variables are set
