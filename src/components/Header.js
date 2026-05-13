@@ -60,45 +60,47 @@ const Header = () => {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center space-x-6">
           {/* Manajemen Data - compact with dropdown */}
-          <div className="relative group" ref={dropdownRef}>
-            <button
-              className="flex items-center px-4 py-2 text-gray-700 hover:text-videobelajar-green transition-colors font-medium"
-            >
-              Manajemen Data
-            </button>
-            
-            {/* Dropdown Menu */}
-            <div className="absolute left-0 top-full mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-              <Link 
-                href="/crud"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
-                onClick={() => setIsDropdownOpen(false)}
+          {isAuthenticated && (
+            <div className="relative group" ref={dropdownRef}>
+              <button
+                className="flex items-center px-4 py-2 text-gray-700 hover:text-videobelajar-green transition-colors font-medium"
               >
-                Produk Kelas
-              </Link>
-              <Link 
-                href="/category-crud"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
-                onClick={() => setIsDropdownOpen(false)}
-              >
-                Kategori
-              </Link>
-              <Link 
-                href="/tutor-crud"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
-                onClick={() => setIsDropdownOpen(false)}
-              >
-                Tutor
-              </Link>
-              <Link 
-                href="/users-crud"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
-                onClick={() => setIsDropdownOpen(false)}
-              >
-                Users
-              </Link>
+                Manajemen Data
+              </button>
+              
+              {/* Dropdown Menu */}
+              <div className="absolute left-0 top-full mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                <Link 
+                  href="/crud"
+                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                  onClick={() => setIsDropdownOpen(false)}
+                >
+                  Produk Kelas
+                </Link>
+                <Link 
+                  href="/category-crud"
+                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                  onClick={() => setIsDropdownOpen(false)}
+                >
+                  Kategori
+                </Link>
+                <Link 
+                  href="/tutor-crud"
+                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                  onClick={() => setIsDropdownOpen(false)}
+                >
+                  Tutor
+                </Link>
+                <Link 
+                  href="/users-crud"
+                  className="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors"
+                  onClick={() => setIsDropdownOpen(false)}
+                >
+                  Users
+                </Link>
+              </div>
             </div>
-          </div>
+          )}
           
           {isAuthenticated ? (
             <div className="relative" ref={dropdownRef}>
@@ -163,11 +165,15 @@ const Header = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden bg-white border-t border-gray-100 py-2 px-4 shadow-inner">
           <div className="flex flex-col space-y-3 pb-3">
-            <div className="font-medium text-gray-800 pt-2 pb-1 border-b border-gray-100">Manajemen Data</div>
-            <Link href="/crud" className="pl-4 text-gray-600 hover:text-videobelajar-green" onClick={() => setIsMobileMenuOpen(false)}>Produk Kelas</Link>
-            <Link href="/category-crud" className="pl-4 text-gray-600 hover:text-videobelajar-green" onClick={() => setIsMobileMenuOpen(false)}>Kategori</Link>
-            <Link href="/tutor-crud" className="pl-4 text-gray-600 hover:text-videobelajar-green" onClick={() => setIsMobileMenuOpen(false)}>Tutor</Link>
-            <Link href="/users-crud" className="pl-4 text-gray-600 hover:text-videobelajar-green" onClick={() => setIsMobileMenuOpen(false)}>Users</Link>
+            {isAuthenticated && (
+              <>
+                <div className="font-medium text-gray-800 pt-2 pb-1 border-b border-gray-100">Manajemen Data</div>
+                <Link href="/crud" className="pl-4 text-gray-600 hover:text-videobelajar-green" onClick={() => setIsMobileMenuOpen(false)}>Produk Kelas</Link>
+                <Link href="/category-crud" className="pl-4 text-gray-600 hover:text-videobelajar-green" onClick={() => setIsMobileMenuOpen(false)}>Kategori</Link>
+                <Link href="/tutor-crud" className="pl-4 text-gray-600 hover:text-videobelajar-green" onClick={() => setIsMobileMenuOpen(false)}>Tutor</Link>
+                <Link href="/users-crud" className="pl-4 text-gray-600 hover:text-videobelajar-green" onClick={() => setIsMobileMenuOpen(false)}>Users</Link>
+              </>
+            )}
             
             {isAuthenticated ? (
               <>
