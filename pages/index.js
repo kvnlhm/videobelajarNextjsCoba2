@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Button from '../src/components/Button';
-import { useUsers } from '../src/hooks/useUsers';
+import { useCourses } from '../src/hooks/useCourses';
 import { useAuth } from '../src/contexts/AuthContext';
 
 const CourseCard = ({ course }) => {
@@ -49,7 +49,7 @@ const CourseCard = ({ course }) => {
 const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState('Semua Kelas');
   const [email, setEmail] = useState('');
-  const { users: courses, loading, error } = useUsers();
+  const { courses, loading, error } = useCourses();
   const { isAuthenticated, user } = useAuth();
   
   console.log('HomePage courses:', courses);
