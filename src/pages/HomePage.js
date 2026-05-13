@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Button from '../components/Button';
-import { useUsers } from '../hooks/useUsers';
+import { useCourses } from '../hooks/useCourses';
 
 const CourseCard = ({ course }) => {
   return (
@@ -75,7 +75,7 @@ const CourseCard = ({ course }) => {
 const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState('Semua Kelas');
   const [email, setEmail] = useState('');
-  const { users: courses, loading, error } = useUsers();
+  const { courses, loading, error } = useCourses();
   
   console.log('HomePage courses:', courses);
   
