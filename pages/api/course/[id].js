@@ -16,6 +16,8 @@ const pool = mysql.createPool({
   user: process.env.MYSQL_USER,
   password: process.env.MYSQL_PASSWORD,
   database: process.env.MYSQL_DATABASE,
+  port: process.env.MYSQL_PORT || 3306,
+  ssl: process.env.MYSQL_HOST && !process.env.MYSQL_HOST.match(/localhost|127\.0\.0\.1/) ? { rejectUnauthorized: false } : undefined,
   connectionLimit: 10,
   acquireTimeout: 60000,
   timeout: 60000

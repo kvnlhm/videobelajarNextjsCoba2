@@ -6,7 +6,9 @@ export default async function handler(req, res) {
       host: process.env.MYSQL_HOST,
       user: process.env.MYSQL_USER,
       password: process.env.MYSQL_PASSWORD,
-      database: process.env.MYSQL_DATABASE
+      database: process.env.MYSQL_DATABASE,
+  port: process.env.MYSQL_PORT || 3306,
+  ssl: process.env.MYSQL_HOST && !process.env.MYSQL_HOST.match(/localhost|127\\.0\\.0\\.1/) ? { rejectUnauthorized: false } : undefined
     }).promise();
 
     // Test connection
@@ -17,7 +19,9 @@ export default async function handler(req, res) {
       env: {
         MYSQL_HOST: process.env.MYSQL_HOST,
         MYSQL_USER: process.env.MYSQL_USER,
-        MYSQL_DATABASE: process.env.MYSQL_DATABASE,
+        MYSQL_database: process.env.MYSQL_DATABASE,
+  port: process.env.MYSQL_PORT || 3306,
+  ssl: process.env.MYSQL_HOST && !process.env.MYSQL_HOST.match(/localhost|127\\.0\\.0\\.1/) ? { rejectUnauthorized: false } : undefined,
         MYSQL_PASSWORD: process.env.MYSQL_PASSWORD ? '***' : 'not set'
       },
       result: rows[0]
@@ -29,7 +33,9 @@ export default async function handler(req, res) {
       env: {
         MYSQL_HOST: process.env.MYSQL_HOST,
         MYSQL_USER: process.env.MYSQL_USER,
-        MYSQL_DATABASE: process.env.MYSQL_DATABASE,
+        MYSQL_database: process.env.MYSQL_DATABASE,
+  port: process.env.MYSQL_PORT || 3306,
+  ssl: process.env.MYSQL_HOST && !process.env.MYSQL_HOST.match(/localhost|127\\.0\\.0\\.1/) ? { rejectUnauthorized: false } : undefined,
         MYSQL_PASSWORD: process.env.MYSQL_PASSWORD ? '***' : 'not set'
       }
     });
