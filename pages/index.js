@@ -151,13 +151,13 @@ const HomePage = () => {
             <p className="text-gray-600 text-lg mb-4">
               Jelajahi Dunia Pengetahuan Melalui Pilihan Kami!
             </p>
-            <div className="flex justify-center items-center gap-4 mb-4">
-              <div className="bg-videobelajar-green text-white px-4 py-2 rounded-full">
+            <div className="flex flex-wrap justify-center items-center gap-4 mb-4">
+              <div className="bg-videobelajar-green text-white px-4 py-2 rounded-full text-sm sm:text-base">
                 <span className="font-semibold">{courses.length}</span> Kursus Tersedia
               </div>
               <Link 
                 href="/crud"
-                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full transition-colors"
+                className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full transition-colors text-sm sm:text-base"
               >
                 Kelola Kursus
               </Link>
