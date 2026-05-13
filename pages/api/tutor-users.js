@@ -1,0 +1,30 @@
+const mysql = require('mysql2/promise');
+
+const pool = mysql.createPool({
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE
+});
+
+export default async function handler(req, res) {
+  if (req.method !== 'GET') {
+    return res.status(405).json({ message: 'Method not allowed' });
+  }
+
+  try {
+    // Get users with tutor role who are not already tutors
+    const [tutorUsers] = await pool.execute(`
+      SELECT u.user_id, u.full_name, u.email
+      FROM users u
+      LEFT JOIN tutors t ON u.user_id = t.user_id
+      WHERE u.role = 'tutor' AND t.user_id IS NULL
+      ORDER BY u.full_name
+    `);
+
+    res.status(200).json({ tutorUsers });
+  } catch (error) {
+    console.error('Error fetching tutor users:', error);
+    res.status(500).json({ message: 'Error fetching tutor users' });
+  }
+}
