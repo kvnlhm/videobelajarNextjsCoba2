@@ -568,7 +568,7 @@ const CrudPage = () => {
                         </td>
                         <td className="px-4 py-4 whitespace-nowrap">
                           <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
-                            {course.category_id || course.category || 'N/A'}
+                            {course.category || course.category_id || 'N/A'}
                           </span>
                         </td>
                         <td className="px-4 py-4 whitespace-nowrap">

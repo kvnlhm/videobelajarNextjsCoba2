@@ -30,10 +30,11 @@ module.exports = async function handler(req, res) {
 async function handleGet(req, res) {
   try {
     const [rows] = await pool.query(`
-      SELECT pk.*, u.full_name as tutor_name 
+      SELECT pk.*, u.full_name as tutor_name, k.category_name 
       FROM produk_kelas pk
       LEFT JOIN tutors t ON pk.tutor_id = t.tutor_id
       LEFT JOIN users u ON t.user_id = u.user_id
+      LEFT JOIN kategori_kelas k ON pk.category_id = k.category_id
     `);
     
     // If no data in database, return sample data
@@ -86,7 +87,8 @@ async function handleGet(req, res) {
       price: `Rp ${course.price.toLocaleString('id-ID')}`,
       thumbnail_url: course.thumbnail_url || '/img1.jpg',
       instructorImage: '/img2.png',
-      category: course.category_id,
+      category_id: course.category_id,
+      category: course.category_name || 'Tanpa Kategori',
       level: course.difficulty_level,
       duration: course.duration_hours,
       isActive: course.is_active
@@ -150,10 +152,11 @@ async function handlePost(req, res) {
     `, [courseData.class_name, courseData.description, courseData.price, courseData.tutor_id, courseData.category_id, courseData.difficulty_level, courseData.duration_hours, courseData.thumbnail_url, courseData.is_active]);
     
     const [newCourse] = await pool.query(`
-      SELECT pk.*, u.full_name as tutor_name 
+      SELECT pk.*, u.full_name as tutor_name, k.category_name 
       FROM produk_kelas pk
       LEFT JOIN tutors t ON pk.tutor_id = t.tutor_id
       LEFT JOIN users u ON t.user_id = u.user_id
+      LEFT JOIN kategori_kelas k ON pk.category_id = k.category_id
       WHERE pk.class_id = ?
     `, [result.insertId]);
     
@@ -167,7 +170,8 @@ async function handlePost(req, res) {
       price: `Rp ${newCourse[0].price.toLocaleString('id-ID')}`,
       thumbnail_url: newCourse[0].thumbnail_url || '/img1.jpg',
       instructorImage: '/img2.png',
-      category: newCourse[0].category_id,
+      category_id: newCourse[0].category_id,
+      category: newCourse[0].category_name || 'Tanpa Kategori',
       level: newCourse[0].difficulty_level,
       duration: newCourse[0].duration_hours,
       isActive: newCourse[0].is_active

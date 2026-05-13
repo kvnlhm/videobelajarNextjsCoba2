@@ -115,10 +115,11 @@ module.exports = async function handler(req, res) {
 async function handleGet(req, res, id) {
   try {
     const [rows] = await pool.query(`
-      SELECT pk.*, u.full_name as tutor_name 
+      SELECT pk.*, u.full_name as tutor_name, k.category_name 
       FROM produk_kelas pk
       LEFT JOIN tutors t ON pk.tutor_id = t.tutor_id
       LEFT JOIN users u ON t.user_id = u.user_id
+      LEFT JOIN kategori_kelas k ON pk.category_id = k.category_id
       WHERE pk.class_id = ?
     `, [id]);
     
@@ -137,7 +138,8 @@ async function handleGet(req, res, id) {
       price: `Rp ${course.price.toLocaleString('id-ID')}`,
       thumbnail_url: course.thumbnail_url || '/img1.jpg',
       instructorImage: '/img2.png',
-      category: course.category_id,
+      category_id: course.category_id,
+      category: course.category_name || 'Tanpa Kategori',
       level: course.difficulty_level,
       duration: course.duration_hours,
       isActive: course.is_active
@@ -240,10 +242,11 @@ async function handlePatch(req, res, id) {
     }
     
     const [updatedCourse] = await pool.query(`
-      SELECT pk.*, u.full_name as tutor_name 
+      SELECT pk.*, u.full_name as tutor_name, k.category_name 
       FROM produk_kelas pk
       LEFT JOIN tutors t ON pk.tutor_id = t.tutor_id
       LEFT JOIN users u ON t.user_id = u.user_id
+      LEFT JOIN kategori_kelas k ON pk.category_id = k.category_id
       WHERE pk.class_id = ?
     `, [id]);
     
@@ -257,7 +260,8 @@ async function handlePatch(req, res, id) {
       price: `Rp ${updatedCourse[0].price.toLocaleString('id-ID')}`,
       thumbnail_url: updatedCourse[0].thumbnail_url || '/img1.jpg',
       instructorImage: '/img2.png',
-      category: updatedCourse[0].category_id,
+      category_id: updatedCourse[0].category_id,
+      category: updatedCourse[0].category_name || 'Tanpa Kategori',
       level: updatedCourse[0].difficulty_level,
       duration: updatedCourse[0].duration_hours,
       isActive: updatedCourse[0].is_active
