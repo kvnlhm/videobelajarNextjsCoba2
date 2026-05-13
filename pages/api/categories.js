@@ -18,7 +18,7 @@ export default async function handler(req, res) {
     // Query to get all categories
     const [categories] = await pool.execute(`
       SELECT category_id, category_name 
-      FROM categories 
+      FROM kategori_kelas 
       ORDER BY category_name
     `);
 

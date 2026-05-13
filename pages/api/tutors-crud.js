@@ -41,7 +41,7 @@ async function handleGet(req, res) {
              t.rating, t.experience_years, t.category_id, c.category_name, t.created_at
       FROM tutors t 
       JOIN users u ON t.user_id = u.user_id 
-      LEFT JOIN categories c ON t.category_id = c.category_id 
+      LEFT JOIN kategori_kelas c ON t.category_id = c.category_id
       ORDER BY u.full_name
     `);
     res.status(200).json(tutors);
@@ -87,7 +87,7 @@ async function handlePost(req, res) {
     // Validate category_id if provided
     if (category_id) {
       const [categoryCheck] = await pool.query(
-        'SELECT category_id FROM categories WHERE category_id = ?',
+        'SELECT category_id FROM kategori_kelas WHERE category_id = ?',
         [category_id]
       );
       
@@ -106,7 +106,7 @@ async function handlePost(req, res) {
              t.rating, t.experience_years, t.category_id, c.category_name, t.created_at
       FROM tutors t 
       JOIN users u ON t.user_id = u.user_id 
-      LEFT JOIN categories c ON t.category_id = c.category_id 
+      LEFT JOIN kategori_kelas c ON t.category_id = c.category_id
       WHERE t.tutor_id = ?
     `, [result.insertId]);
     
@@ -162,7 +162,7 @@ async function handlePut(req, res) {
     // Validate category_id if provided
     if (category_id) {
       const [categoryCheck] = await pool.query(
-        'SELECT category_id FROM categories WHERE category_id = ?',
+        'SELECT category_id FROM kategori_kelas WHERE category_id = ?',
         [category_id]
       );
       
@@ -185,7 +185,7 @@ async function handlePut(req, res) {
              t.rating, t.experience_years, t.category_id, c.category_name, t.created_at
       FROM tutors t 
       JOIN users u ON t.user_id = u.user_id 
-      LEFT JOIN categories c ON t.category_id = c.category_id 
+      LEFT JOIN kategori_kelas c ON t.category_id = c.category_id
       WHERE t.tutor_id = ?
     `, [id]);
     

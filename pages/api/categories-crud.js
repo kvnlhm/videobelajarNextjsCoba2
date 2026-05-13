@@ -36,7 +36,7 @@ module.exports = async function handler(req, res) {
 
 async function handleGet(req, res) {
   try {
-    const [categories] = await pool.query('SELECT * FROM categories ORDER BY category_name');
+    const [categories] = await pool.query('SELECT * FROM kategori_kelas ORDER BY category_name');
     res.status(200).json(categories);
   } catch (error) {
     console.error('Error fetching categories:', error);
@@ -55,7 +55,7 @@ async function handlePost(req, res) {
 
     // Check if category name already exists
     const [existingCategory] = await pool.query(
-      'SELECT category_id FROM categories WHERE category_name = ?',
+      'SELECT category_id FROM kategori_kelas WHERE category_name = ?',
       [category_name.trim()]
     );
     
@@ -64,11 +64,11 @@ async function handlePost(req, res) {
     }
 
     const [result] = await pool.query(
-      'INSERT INTO categories (category_name, description) VALUES (?, ?)',
+      'INSERT INTO kategori_kelas (category_name, description) VALUES (?, ?)',
       [category_name.trim(), description || null]
     );
 
-    const [newCategory] = await pool.query('SELECT * FROM categories WHERE category_id = ?', [result.insertId]);
+    const [newCategory] = await pool.query('SELECT * FROM kategori_kelas WHERE category_id = ?', [result.insertId]);
     
     res.status(201).json(newCategory[0]);
   } catch (error) {
@@ -92,7 +92,7 @@ async function handlePut(req, res) {
     }
 
     // Check if category exists
-    const [existingCategory] = await pool.query('SELECT category_id FROM categories WHERE category_id = ?', [id]);
+    const [existingCategory] = await pool.query('SELECT category_id FROM kategori_kelas WHERE category_id = ?', [id]);
     
     if (existingCategory.length === 0) {
       return res.status(404).json({ message: 'Category not found' });
@@ -100,7 +100,7 @@ async function handlePut(req, res) {
 
     // Check if category name already exists (excluding current category)
     const [duplicateCategory] = await pool.query(
-      'SELECT category_id FROM categories WHERE category_name = ? AND category_id != ?',
+      'SELECT category_id FROM kategori_kelas WHERE category_name = ? AND category_id != ?',
       [category_name.trim(), id]
     );
     
@@ -109,7 +109,7 @@ async function handlePut(req, res) {
     }
 
     const [result] = await pool.query(
-      'UPDATE categories SET category_name = ?, description = ? WHERE category_id = ?',
+      'UPDATE kategori_kelas SET category_name = ?, description = ? WHERE category_id = ?',
       [category_name.trim(), description || null, id]
     );
 
@@ -117,7 +117,7 @@ async function handlePut(req, res) {
       return res.status(404).json({ message: 'Category not found' });
     }
 
-    const [updatedCategory] = await pool.query('SELECT * FROM categories WHERE category_id = ?', [id]);
+    const [updatedCategory] = await pool.query('SELECT * FROM kategori_kelas WHERE category_id = ?', [id]);
     
     res.status(200).json(updatedCategory[0]);
   } catch (error) {
@@ -154,7 +154,7 @@ async function handleDelete(req, res) {
       });
     }
 
-    const [result] = await pool.query('DELETE FROM categories WHERE category_id = ?', [id]);
+    const [result] = await pool.query('DELETE FROM kategori_kelas WHERE category_id = ?', [id]);
 
     if (result.affectedRows === 0) {
       return res.status(404).json({ message: 'Category not found' });

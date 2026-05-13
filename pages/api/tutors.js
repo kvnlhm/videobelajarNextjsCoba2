@@ -20,7 +20,7 @@ export default async function handler(req, res) {
       SELECT t.tutor_id, u.full_name, t.category_id, c.category_name
       FROM tutors t 
       JOIN users u ON t.user_id = u.user_id 
-      LEFT JOIN categories c ON t.category_id = c.category_id
+      LEFT JOIN kategori_kelas c ON t.category_id = c.category_id
       ORDER BY u.full_name
     `);
 
