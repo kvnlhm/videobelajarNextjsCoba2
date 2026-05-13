@@ -101,7 +101,7 @@ const HomePage = () => {
           }}
         />
         {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black/60"></div>
+        <div className="absolute inset-0 bg-black/80"></div>
         <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
             Revolusi Pembelajaran: Temukan Ilmu Baru melalui Platform Video Interaktif!
